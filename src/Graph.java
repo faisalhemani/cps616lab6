@@ -336,12 +336,12 @@ public class Graph implements Cloneable {
     	for (k=0; k<vertices; k++)
             for (i=0; i<vertices; i++)
             	for (j=0; j<vertices; j++)
-            		temp = new BitSet [2];
-            		temp[1] = bitsetrow[i].get(k);
-            		temp[2] = bitsetrow[k].get(j);
-            		and(temp);
-            		temp[0] = bitsetrow[i].get(j);
-            		or(temp);
+            		temp = new BitSet [1];
+            		temp[0].set(1, bitsetrow[i].get(k));
+            		temp[0].set(2, bitsetrow[k].get(j));
+            		temp[0].and(temp);
+            		temp[0].set(0, bitsetrow[i].get(j));
+            		temp[0].or(temp);
             		bitsetrow[i].set(j, temp);
     				
     }
