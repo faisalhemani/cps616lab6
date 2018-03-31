@@ -1,4 +1,4 @@
-
+package Warshall;
 import java.util.Scanner;
 import java.util.Random;
 import java.util.BitSet;
@@ -29,7 +29,6 @@ public class Graph implements Cloneable {
      * BitSet representation of each row in adjacency matrix
      */
     BitSet[] bitsetrow;
-    BitSet[] temp;
     
     int totaledges = 0;
     /**
@@ -312,10 +311,10 @@ public class Graph implements Cloneable {
      */
     public void Warshall2() {
     	int i, j, k;
-        for (k=0; k<vertices; k++)
-            for (i=0; i<vertices; i++)
+        for (k=0; k<vertices; k++){
+            for (i=0; i<vertices; i++){
             	if(edges[i][k] == 1){
-	                for (j=0; j<vertices; j++)
+	                for (j=0; j<vertices; j++){
 	                    if (edges[i][j]==0 || edges[k][j]==1) {
 	                        edges[i][j] = 1;
 	                        totaledges++;
@@ -333,17 +332,16 @@ public class Graph implements Cloneable {
      */
     public void Warshall3() {
     	int i, j, k;
-    	for (k=0; k<vertices; k++)
-            for (i=0; i<vertices; i++)
-            	for (j=0; j<vertices; j++)
-            		temp = new BitSet [1];
-            		temp[0].set(1, bitsetrow[i].get(k));
-            		temp[0].set(2, bitsetrow[k].get(j));
-            		temp[0].and(temp);
-            		temp[0].set(0, bitsetrow[i].get(j));
-            		temp[0].or(temp);
-            		bitsetrow[i].set(j, temp);
-    				
+    	for (k=0; k<vertices; k++){
+            for (i=0; i<vertices; i++){
+            	if(bitsetrow[i].get(k)){
+	            	for (j=0; j<vertices; j++){
+	            		if (!bitsetrow[i].get(j) || bitsetrow[k].get(j))
+	            			bitsetrow[i].set(j);
+	            	}            		
+            	}
+            }
+    	}
     }
     
 }
